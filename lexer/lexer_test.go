@@ -6,8 +6,14 @@ import (
 	"github.com/m-rstewart/go-interpreter/token"
 )
 
-func TestNextToken(t *testing.T) {
-	input := `=+(){},;`
+func TestNextTokenSimple(t *testing.T) {
+	input := `let five = 5;
+	let ten = 10;
+		 let add = fn(x, y) {
+			 x + y;
+	};
+		 let result = add(five, ten);
+`
 
 	tests := []struct {
 		expectedType    token.TokenType
