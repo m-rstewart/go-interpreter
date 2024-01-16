@@ -13,3 +13,16 @@ func New(input string) *Lexer {
 	}
 	return lex
 }
+
+// Give us the next character and advance our position in the input string
+// Only supports ASCII for now
+func (lex *Lexer) readChar() {
+	if lex.readPosition >= len(lex.input) {
+		// terminate
+		lex.ch = 0
+	} else {
+		lex.ch = lex.input[lex.readPosition]
+	}
+	lex.position = lex.readPosition
+	lex.readPosition += 1
+}
