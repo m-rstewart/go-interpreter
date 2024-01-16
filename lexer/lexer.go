@@ -30,6 +30,8 @@ func (lex *Lexer) readChar() {
 	lex.readPosition += 1
 }
 
+// Gives us the token of the current character under examination.
+// Advances the lexer pointers before returning the token.
 func (lex *Lexer) NextToken() token.Token {
 	var tok token.Token
 
