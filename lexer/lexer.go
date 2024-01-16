@@ -66,6 +66,7 @@ func (lex *Lexer) NextToken() token.Token {
 		} else if isDigit(lex.ch) {
 			tok.Type = token.INT
 			tok.Literal = lex.readNumber()
+			return tok
 		} else {
 			tok = newToken(token.ILLEGAL, lex.ch)
 		}
