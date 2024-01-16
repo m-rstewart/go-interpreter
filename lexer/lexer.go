@@ -35,6 +35,8 @@ func (lex *Lexer) readChar() {
 func (lex *Lexer) NextToken() token.Token {
 	var tok token.Token
 
+	lex.skipWhitespace()
+
 	switch lex.ch {
 	case '=':
 		tok = newToken(token.ASSIGN, lex.ch)
@@ -59,6 +61,7 @@ func (lex *Lexer) NextToken() token.Token {
 		if isLetter(lex.ch) {
 			// could either be a keyword (fn, let) or a identifier (foo, bar) at this point
 			tok.Literal = lex.readIdentifier()
+			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
 		} else {
 			tok = newToken(token.ILLEGAL, lex.ch)
@@ -74,6 +77,13 @@ func (lex *Lexer) readIdentifier() string {
 		lex.readChar()
 	}
 	return lex.input[position:lex.position]
+}
+
+// if next char is whitespace, advance the pointers until a valid char is being read
+func (lex *Lexer) skipWhitespace() {
+	for lex.ch == ' ' || lex.ch == '\t' || lex.ch == '\n' || lex.ch == '\r' {
+		lex.readChar()
+	}
 }
 
 func isLetter(ch byte) bool {
